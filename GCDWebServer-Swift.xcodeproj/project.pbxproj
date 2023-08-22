@@ -35,6 +35,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		876475D02A947038002B6361 /* .gitignore */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitignore; sourceTree = "<group>"; };
 		87F6118A2A93C68F00404C89 /* libGCDWebServer-Swift.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libGCDWebServer-Swift.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		87F6118D2A93C68F00404C89 /* GCDWebServer_Swift.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GCDWebServer_Swift.swift; sourceTree = "<group>"; };
 		87F611982A93C6B600404C89 /* Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = Tests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -63,6 +64,7 @@
 		87F611812A93C68F00404C89 = {
 			isa = PBXGroup;
 			children = (
+				876475D02A947038002B6361 /* .gitignore */,
 				87F6118C2A93C68F00404C89 /* GCDWebServer-Swift */,
 				87F611992A93C6B600404C89 /* Tests */,
 				87F6118B2A93C68F00404C89 /* Products */,
