@@ -27,11 +27,11 @@
 
 import Foundation
 
-public typealias GCDWebServerMatchBlock = (_ requestMethod: String, _ requestURL: URL, _ requestHeaders: [String: String], _ urlPath: String, _ urlQuery: [String: String]) -> String?
+public typealias GCDWebServerMatchBlock = (_ requestMethod: String, _ requestURL: URL, _ requestHeaders: [String: String], _ urlPath: String, _ urlQuery: [String: String]) -> GCDWebServerRequest?
 
 class GCDWebServerHandler {
   
-  private var matchBlock: GCDWebServerMatchBlock?
+  fileprivate var matchBlock: GCDWebServerMatchBlock
   
   init(matchBlock: @escaping GCDWebServerMatchBlock) {
     self.matchBlock = matchBlock
@@ -69,7 +69,7 @@ public class GCDWebServer {
         if (matches.count == 0) {
           return nil
         }
-        return ""
+        return GCDWebServerRequest(with: requestMethod, url: requestURL, headers: requestHeaders, path: urlPath, query: urlQuery)
       }
       addHandler(with: matchBlock)
     }
@@ -85,5 +85,15 @@ extension GCDWebServer {
   
   func handlersCount() -> Int {
     return handlers.count
+  }
+  
+  func request(with method: String, url: URL, headers: [String: String], path: String, query: [String: String]) -> GCDWebServerRequest? {
+    for handler in handlers {
+      let request = handler.matchBlock(method, url, headers, path, query)
+      if let request {
+        return request
+      }
+    }
+    return nil
   }
 }

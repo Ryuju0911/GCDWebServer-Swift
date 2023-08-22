@@ -11,7 +11,11 @@ final class Tests: XCTestCase {
     server.addHandler(for: "GET", regex: "/test")
     XCTAssertEqual(server.handlersCount(), 1)
     
+    XCTAssertNotNil(server.request(with: "GET", url: URL(string: "localhost")!, headers: [:], path: "/test", query: [:]))
+    XCTAssertNil(server.request(with: "POST", url: URL(string: "localhost")!, headers: [:], path: "/test", query: [:]))
+    
     server.removeAllHandlers()
     XCTAssertEqual(server.handlersCount(), 0)
+    XCTAssertNil(server.request(with: "GET", url: URL(string: "localhost")!, headers: [:], path: "/test", query: [:]))
   }
 }
