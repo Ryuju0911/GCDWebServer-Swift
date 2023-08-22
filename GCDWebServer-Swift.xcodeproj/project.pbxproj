@@ -8,7 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		87F6118E2A93C68F00404C89 /* GCDWebServer_Swift.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87F6118D2A93C68F00404C89 /* GCDWebServer_Swift.swift */; };
-		87F6119B2A93C6B600404C89 /* GCDWebServerTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87F6119A2A93C6B600404C89 /* GCDWebServerTest.swift */; };
+		87F6119B2A93C6B600404C89 /* GCDWebServerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87F6119A2A93C6B600404C89 /* GCDWebServerTests.swift */; };
 		87F6119C2A93C6B600404C89 /* libGCDWebServer-Swift.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 87F6118A2A93C68F00404C89 /* libGCDWebServer-Swift.a */; };
 /* End PBXBuildFile section */
 
@@ -39,7 +39,7 @@
 		87F6118A2A93C68F00404C89 /* libGCDWebServer-Swift.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libGCDWebServer-Swift.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		87F6118D2A93C68F00404C89 /* GCDWebServer_Swift.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GCDWebServer_Swift.swift; sourceTree = "<group>"; };
 		87F611982A93C6B600404C89 /* Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = Tests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		87F6119A2A93C6B600404C89 /* GCDWebServerTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GCDWebServerTest.swift; sourceTree = "<group>"; };
+		87F6119A2A93C6B600404C89 /* GCDWebServerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GCDWebServerTests.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -93,7 +93,7 @@
 		87F611992A93C6B600404C89 /* Tests */ = {
 			isa = PBXGroup;
 			children = (
-				87F6119A2A93C6B600404C89 /* GCDWebServerTest.swift */,
+				87F6119A2A93C6B600404C89 /* GCDWebServerTests.swift */,
 			);
 			path = Tests;
 			sourceTree = "<group>";
@@ -196,7 +196,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				87F6119B2A93C6B600404C89 /* GCDWebServerTest.swift in Sources */,
+				87F6119B2A93C6B600404C89 /* GCDWebServerTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
