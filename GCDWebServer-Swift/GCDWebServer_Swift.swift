@@ -27,7 +27,7 @@
 
 import Foundation
 
-public typealias GCDWebServerMatchBlock = (_ requestMethod: String, _ requestURL: URL, _ requestHeders: [String: String], _ urlPath: String, _ urlQuery: [String: String]) -> String?
+public typealias GCDWebServerMatchBlock = (_ requestMethod: String, _ requestURL: URL, _ requestHeaders: [String: String], _ urlPath: String, _ urlQuery: [String: String]) -> String?
 
 class GCDWebServerHandler {
   
@@ -49,6 +49,30 @@ public class GCDWebServer {
   public func addHandler(with matchBlock: @escaping GCDWebServerMatchBlock) {
     let handler = GCDWebServerHandler(matchBlock: matchBlock)
     handlers.insert(handler, at: 0)
+  }
+  
+  public func addHandler(for method: String, regex: String) {
+    let expression: NSRegularExpression?
+    do {
+      expression = try NSRegularExpression(pattern: regex, options: .caseInsensitive)
+    } catch {
+      expression = nil
+    }
+    
+    if let expression {
+      let matchBlock: GCDWebServerMatchBlock = { requestMethod, requestURL, requestHeaders, urlPath, urlQuery in
+        if (requestMethod != method) {
+          return nil
+        }
+        
+        let matches = expression.matches(in: urlPath, range: NSMakeRange(0, urlPath.count))
+        if (matches.count == 0) {
+          return nil
+        }
+        return ""
+      }
+      addHandler(with: matchBlock)
+    }
   }
   
   public func removeAllHandlers() {
