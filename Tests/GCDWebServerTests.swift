@@ -8,7 +8,10 @@ final class Tests: XCTestCase {
     let server = GCDWebServer()
     XCTAssertNotNil(server)
     
-    server.addHandler()
+    let matchBlock: GCDWebServerMatchBlock = { requestMethod, requestURL, requestHeaders, urlPath, urlQuery in
+      return ""
+    }
+    server.addHandler(with: matchBlock)
     XCTAssertEqual(server.handlersCount(), 1)
     
     server.removeAllHandlers()

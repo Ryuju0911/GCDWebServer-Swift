@@ -25,8 +25,17 @@
  SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
+import Foundation
+
+public typealias GCDWebServerMatchBlock = (_ requestMethod: String, _ requestURL: URL, _ requestHeders: [String: String], _ urlPath: String, _ urlQuery: [String: String]) -> String?
+
 class GCDWebServerHandler {
   
+  private var matchBlock: GCDWebServerMatchBlock?
+  
+  init(matchBlock: @escaping GCDWebServerMatchBlock) {
+    self.matchBlock = matchBlock
+  }
 }
 
 public class GCDWebServer {
@@ -37,8 +46,8 @@ public class GCDWebServer {
     handlers = []
   }
   
-  public func addHandler() {
-    let handler = GCDWebServerHandler()
+  public func addHandler(with matchBlock: @escaping GCDWebServerMatchBlock) {
+    let handler = GCDWebServerHandler(matchBlock: matchBlock)
     handlers.insert(handler, at: 0)
   }
   
