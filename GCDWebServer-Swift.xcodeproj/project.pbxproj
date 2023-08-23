@@ -8,6 +8,9 @@
 
 /* Begin PBXBuildFile section */
 		87BD48672A95091B00FB48E0 /* GCDWebServerRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87BD48662A95091B00FB48E0 /* GCDWebServerRequest.swift */; };
+		87BD48692A950DDA00FB48E0 /* GCDWebServerConnection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87BD48682A950DDA00FB48E0 /* GCDWebServerConnection.swift */; };
+		87BD486B2A95102000FB48E0 /* GCDWebServer+Testing.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87BD486A2A95102000FB48E0 /* GCDWebServer+Testing.swift */; };
+		87BD486D2A95105200FB48E0 /* GCDWebServerConnectionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87BD486C2A95105200FB48E0 /* GCDWebServerConnectionTests.swift */; };
 		87F6118E2A93C68F00404C89 /* GCDWebServer_Swift.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87F6118D2A93C68F00404C89 /* GCDWebServer_Swift.swift */; };
 		87F6119B2A93C6B600404C89 /* GCDWebServerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87F6119A2A93C6B600404C89 /* GCDWebServerTests.swift */; };
 		87F6119C2A93C6B600404C89 /* libGCDWebServer-Swift.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 87F6118A2A93C68F00404C89 /* libGCDWebServer-Swift.a */; };
@@ -38,6 +41,9 @@
 /* Begin PBXFileReference section */
 		876475D02A947038002B6361 /* .gitignore */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitignore; sourceTree = "<group>"; };
 		87BD48662A95091B00FB48E0 /* GCDWebServerRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GCDWebServerRequest.swift; sourceTree = "<group>"; };
+		87BD48682A950DDA00FB48E0 /* GCDWebServerConnection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GCDWebServerConnection.swift; sourceTree = "<group>"; };
+		87BD486A2A95102000FB48E0 /* GCDWebServer+Testing.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "GCDWebServer+Testing.swift"; sourceTree = "<group>"; };
+		87BD486C2A95105200FB48E0 /* GCDWebServerConnectionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GCDWebServerConnectionTests.swift; sourceTree = "<group>"; };
 		87F6118A2A93C68F00404C89 /* libGCDWebServer-Swift.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libGCDWebServer-Swift.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		87F6118D2A93C68F00404C89 /* GCDWebServer_Swift.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GCDWebServer_Swift.swift; sourceTree = "<group>"; };
 		87F611982A93C6B600404C89 /* Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = Tests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -89,6 +95,8 @@
 			children = (
 				87F6118D2A93C68F00404C89 /* GCDWebServer_Swift.swift */,
 				87BD48662A95091B00FB48E0 /* GCDWebServerRequest.swift */,
+				87BD48682A950DDA00FB48E0 /* GCDWebServerConnection.swift */,
+				87BD486A2A95102000FB48E0 /* GCDWebServer+Testing.swift */,
 			);
 			path = "GCDWebServer-Swift";
 			sourceTree = "<group>";
@@ -97,6 +105,7 @@
 			isa = PBXGroup;
 			children = (
 				87F6119A2A93C6B600404C89 /* GCDWebServerTests.swift */,
+				87BD486C2A95105200FB48E0 /* GCDWebServerConnectionTests.swift */,
 			);
 			path = Tests;
 			sourceTree = "<group>";
@@ -191,6 +200,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				87BD48692A950DDA00FB48E0 /* GCDWebServerConnection.swift in Sources */,
+				87BD486B2A95102000FB48E0 /* GCDWebServer+Testing.swift in Sources */,
 				87BD48672A95091B00FB48E0 /* GCDWebServerRequest.swift in Sources */,
 				87F6118E2A93C68F00404C89 /* GCDWebServer_Swift.swift in Sources */,
 			);
@@ -200,6 +211,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				87BD486D2A95105200FB48E0 /* GCDWebServerConnectionTests.swift in Sources */,
 				87F6119B2A93C6B600404C89 /* GCDWebServerTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
