@@ -78,4 +78,50 @@ public class GCDWebServer {
   public func removeAllHandlers() {
     handlers.removeAll()
   }
+  
+  public func start(with options: [String: Any]) -> Bool {
+    return start()
+  }
+
+  private func start() -> Bool {
+    var addr4 = sockaddr_in()
+    memset(&addr4, 0, MemoryLayout<sockaddr_in>.size)
+    addr4.sin_len = UInt8(MemoryLayout<sockaddr_in>.size)
+    addr4.sin_family = sa_family_t(AF_INET)
+    addr4.sin_port = 9848
+    addr4.sin_addr.s_addr = inet_addr("0.0.0.0")
+    
+    var bindAddr4 = sockaddr()
+    memcpy(&bindAddr4, &addr4, Int(MemoryLayout<sockaddr_in>.size))
+    
+    let listeningSocket4 = createListeningSocket(useIPv6: false, localAddress: &bindAddr4, length: UInt32(MemoryLayout<sockaddr_in>.size), maxPendingConnections: 16)
+    if (listeningSocket4 <= 0) {
+      return false
+    }
+    
+    return true
+  }
+  
+  private func createListeningSocket(useIPv6: Bool, localAddress: UnsafePointer<sockaddr>, length: socklen_t, maxPendingConnections: Int32) -> Int32 {
+    let domain: Int32 = useIPv6 ? PF_INET6 : PF_INET
+    let socketType: Int32 = SOCK_STREAM
+    let protocolType: Int32 = IPPROTO_TCP
+    
+    let listeningSocket = socket(domain, socketType, protocolType)
+    if (listeningSocket > 0) {
+      var yes: Int32 = 1
+      setsockopt(listeningSocket, SOL_SOCKET, SO_REUSEADDR, &yes, socklen_t(MemoryLayout<Int32>.size))
+      
+      if (bind(listeningSocket, localAddress, length) == 0) {
+        if (listen(listeningSocket, maxPendingConnections) == 0) {
+          return listeningSocket
+        } else {
+          close(listeningSocket)
+        }
+      } else {
+        close(listeningSocket)
+      }
+    }
+    return -1
+  }
 }

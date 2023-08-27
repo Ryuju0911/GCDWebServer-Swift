@@ -18,4 +18,9 @@ final class Tests: XCTestCase {
     XCTAssertEqual(server.handlersCount(), 0)
     XCTAssertNil(server.request(with: "GET", url: URL(string: "localhost")!, headers: [:], path: "/test", query: [:]))
   }
+  
+  func testStart() {
+    let server = GCDWebServer()
+    XCTAssert(server.start(with: [:]))
+  }
 }
