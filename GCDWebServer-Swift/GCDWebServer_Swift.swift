@@ -27,7 +27,22 @@
 
 import Foundation
 
+#if os(iOS)
+let kDefaultPort: Int = 80
+#else
+let kDefaultPort: Int = 8080
+#endif
+
+let GCDWebServerOption_Port = "Port"
+
 public typealias GCDWebServerMatchBlock = (_ requestMethod: String, _ requestURL: URL, _ requestHeaders: [String: String], _ urlPath: String, _ urlQuery: [String: String]) -> GCDWebServerRequest?
+
+private func getOption(options: [String: Any]?, key: String, defaultValue: Any) -> Any {
+  if let value = options?[key] {
+    return value
+  }
+  return defaultValue
+}
 
 public class GCDWebServerHandler {
   
@@ -39,6 +54,8 @@ public class GCDWebServerHandler {
 }
 
 public class GCDWebServer {
+  
+  private var options: [String: Any]?
   
   public var handlers: [GCDWebServerHandler]
     
@@ -84,16 +101,31 @@ public class GCDWebServer {
     handlers.removeAll()
   }
   
+  public func start() -> Bool {
+    return start(with: kDefaultPort)
+  }
+  
+  private func start(with port: Int) -> Bool {
+    var options: [String: Any] = [:]
+    options[GCDWebServerOption_Port] = kDefaultPort
+    return start(with: options)
+  }
+  
   public func start(with options: [String: Any]) -> Bool {
-    return start()
+    if self.options == nil {
+      self.options = options
+    }
+    return _start()
   }
 
-  private func start() -> Bool {
+  private func _start() -> Bool {
+    let port = getOption(options: options, key: GCDWebServerOption_Port, defaultValue: 0)
+    
     var addr4 = sockaddr_in()
     memset(&addr4, 0, MemoryLayout<sockaddr_in>.size)
     addr4.sin_len = UInt8(MemoryLayout<sockaddr_in>.size)
     addr4.sin_family = sa_family_t(AF_INET)
-    addr4.sin_port = 9848
+    addr4.sin_port = port as? in_port_t ?? 0
     addr4.sin_addr.s_addr = inet_addr("0.0.0.0")
     
     var bindAddr4 = sockaddr()
