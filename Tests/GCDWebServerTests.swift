@@ -22,5 +22,6 @@ final class Tests: XCTestCase {
   func testStart() {
     let server = GCDWebServer()
     XCTAssert(server.start(with: [:]))
+    server.stop()
   }
 }
