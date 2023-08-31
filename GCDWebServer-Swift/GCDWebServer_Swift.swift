@@ -119,14 +119,14 @@ public class GCDWebServer {
   }
 
   private func _start() -> Bool {
-    let port = getOption(options: options, key: GCDWebServerOption_Port, defaultValue: 0)
+    let port = getOption(options: options, key: GCDWebServerOption_Port, defaultValue: 0) as! Int
     
     var addr4 = sockaddr_in()
     memset(&addr4, 0, MemoryLayout<sockaddr_in>.size)
     addr4.sin_len = UInt8(MemoryLayout<sockaddr_in>.size)
     addr4.sin_family = sa_family_t(AF_INET)
-    addr4.sin_port = port as? in_port_t ?? 0
-    addr4.sin_addr.s_addr = inet_addr("0.0.0.0")
+    addr4.sin_port = in_port_t(port)
+    addr4.sin_addr.s_addr = inet_addr("127.0.0.1")
     
     var bindAddr4 = sockaddr()
     memcpy(&bindAddr4, &addr4, Int(MemoryLayout<sockaddr_in>.size))
@@ -172,6 +172,16 @@ public class GCDWebServer {
     source.setCancelHandler {
       close(listeningSocket)
       self.sourceGroup.leave()
+    }
+    
+    source.setEventHandler {
+      var remoteSockAddr = sockaddr()
+      var remoteAddrLen = socklen_t(MemoryLayout<sockaddr>.size)
+      
+      if accept(listeningSocket, &remoteSockAddr, &remoteAddrLen) > 0 {
+        let connection = GCDWebServerConnection(with: self)
+        connection.echo()
+      }
     }
     
     return source

@@ -54,6 +54,9 @@ public class GCDWebServerConnection {
       }
     }
   }
+  
+  // Only used for avoiding unused warning.
+  public func echo() {}
 }
 
 extension GCDWebServerConnection {
