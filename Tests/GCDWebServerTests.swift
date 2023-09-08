@@ -33,8 +33,8 @@ final class Tests: XCTestCase {
     memcpy(&bindRemoteAddr4, &remoteAddr, Int(MemoryLayout<sockaddr_in>.size))
     
     if connect(clientSocket, &bindRemoteAddr4, socklen_t(MemoryLayout<sockaddr_in>.size)) == 0 {
-      let messages = "Test message"
-      let sentBytes = send(clientSocket, &bindRemoteAddr4, messages.utf8.count, 0)
+      let message = "Test message"
+      let sentBytes = send(clientSocket, message, message.utf8.count, 0)
       if sentBytes < 0 {
         server.stop()
         close(clientSocket)

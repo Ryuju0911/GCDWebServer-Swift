@@ -31,10 +31,13 @@ public class GCDWebServerConnection {
   
   private var server: GCDWebServer
   
+  private var socket: Int32
+  
   private var request: GCDWebServerRequest?
   
-  public init(with server: GCDWebServer) {
+  public init(with server: GCDWebServer, socket: Int32) {
     self.server = server
+    self.socket = socket
     
     readRequestHeaders()
   }
@@ -55,7 +58,7 @@ public class GCDWebServerConnection {
     }
   }
   
-  // Only used for avoiding unused warning.
+  /// Only used for avoiding unused warning.
   public func echo() {}
 }
 

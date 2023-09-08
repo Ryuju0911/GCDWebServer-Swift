@@ -178,16 +178,29 @@ public class GCDWebServer {
       var remoteSockAddr = sockaddr()
       var remoteAddrLen = socklen_t(MemoryLayout<sockaddr>.size)
       
-      if accept(listeningSocket, &remoteSockAddr, &remoteAddrLen) > 0 {
-        let connection = GCDWebServerConnection(with: self)
+      let clientSocket = accept(listeningSocket, &remoteSockAddr, &remoteAddrLen)
+      if clientSocket > 0 {
+        var buffer = [UInt8](repeating: 0, count: 1024)
+        let bytesRead = recv(clientSocket, &buffer, buffer.count, 0)
+        
+        if bytesRead <= 0 {
+          print("Client disconnected")
+        }
+        
+        if let message = String(bytes: buffer, encoding: .utf8) {
+          print(message)
+        }
+        
+        let connection = GCDWebServerConnection(with: self, socket: listeningSocket)
         connection.echo()
       }
+      
     }
     
     return source
   }
   
-  // This function must be called after calling start to leave dispatch group.
+  /// This function must be called after calling start to leave dispatch group.
   public func stop() {
     source4?.cancel()
     source4 = nil

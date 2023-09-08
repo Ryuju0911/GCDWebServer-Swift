@@ -1,6 +1,6 @@
 import Foundation
 
-// Extension for tests
+/// Extension for tests
 extension GCDWebServer {
   
   func handlersCount() -> Int {
