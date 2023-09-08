@@ -32,13 +32,26 @@ final class Tests: XCTestCase {
     var bindRemoteAddr4 = sockaddr()
     memcpy(&bindRemoteAddr4, &remoteAddr, Int(MemoryLayout<sockaddr_in>.size))
     
-    let socket = connect(clientSocket, &bindRemoteAddr4, socklen_t(MemoryLayout<sockaddr_in>.size))
-    if socket < 0 {
+    if connect(clientSocket, &bindRemoteAddr4, socklen_t(MemoryLayout<sockaddr_in>.size)) == 0 {
+      let messages = "Test message"
+      let sentBytes = send(clientSocket, &bindRemoteAddr4, messages.utf8.count, 0)
+      if sentBytes < 0 {
+        server.stop()
+        close(clientSocket)
+        
+        let errorNumber = errno
+        let errorMessage = String(cString: strerror(errorNumber))
+        XCTFail("Send failed with error: \(errorNumber) - \(errorMessage)")
+      } else {
+        close(clientSocket)
+      }
+    } else {
+      server.stop()
+      close(clientSocket)
+      
       let errorNumber = errno
       let errorMessage = String(cString: strerror(errorNumber))
       XCTFail("Connect failed with error: \(errorNumber) - \(errorMessage)")
     }
-    
-    server.stop()
   }
 }
