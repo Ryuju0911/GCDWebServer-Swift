@@ -178,23 +178,11 @@ public class GCDWebServer {
       var remoteSockAddr = sockaddr()
       var remoteAddrLen = socklen_t(MemoryLayout<sockaddr>.size)
       
-      let clientSocket = accept(listeningSocket, &remoteSockAddr, &remoteAddrLen)
-      if clientSocket > 0 {
-        var buffer = [UInt8](repeating: 0, count: 1024)
-        let bytesRead = recv(clientSocket, &buffer, buffer.count, 0)
-        
-        if bytesRead <= 0 {
-          print("Client disconnected")
-        }
-        
-        if let message = String(bytes: buffer, encoding: .utf8) {
-          print(message)
-        }
-        
-        let connection = GCDWebServerConnection(with: self, socket: listeningSocket)
+      let socket = accept(listeningSocket, &remoteSockAddr, &remoteAddrLen)
+      if socket > 0 {
+        let connection = GCDWebServerConnection(with: self, socket: socket)
         connection.echo()
       }
-      
     }
     
     return source

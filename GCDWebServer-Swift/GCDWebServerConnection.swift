@@ -43,6 +43,8 @@ public class GCDWebServerConnection {
   }
   
   private func readRequestHeaders() {
+    readData(length: Int.max)
+    
     let method = "GET"
     let url = URL(string: "localhost")!
     let headers: [String: String] = [:]
@@ -54,6 +56,18 @@ public class GCDWebServerConnection {
       if let request {
         self.request = request
         break
+      }
+    }
+  }
+  
+  private func readData(length: Int) {
+    let readQueue = DispatchQueue(label: "GCDWebServerConnection.readQueue")
+    DispatchIO.read(fromFileDescriptor: socket, maxLength: length, runningHandlerOn: readQueue) { buffer, err in
+      if err != 0 {
+        return
+      }
+      if buffer.count > 0 {
+        print("OK")
       }
     }
   }
