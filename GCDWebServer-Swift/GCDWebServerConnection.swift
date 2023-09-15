@@ -25,11 +25,14 @@
  SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
+import os
 import Foundation
 
 let kHeaderReadCapacity = 1024
 
 typealias ReadCompletionBlock = (_ success: Bool) -> Void
+
+typealias ReadHeadersCompletionBlock = (_ extraData: Data?) -> Void
 
 public class GCDWebServerConnection {
   
@@ -42,6 +45,10 @@ public class GCDWebServerConnection {
   private var headersData: Data?
   
   private let doubleCRLFData: Data = Data(bytes: "\r\n\r\n", count: 4)
+  
+  private let logger = Logger(subsystem: "GCDWebServerConnection.Logger", category: "main")
+  
+  private var requestMessage: CFHTTPMessage?
   
   private enum readDataTypes: Int {
     case headers
@@ -56,7 +63,14 @@ public class GCDWebServerConnection {
   
   private func readRequestHeaders() {
     headersData = Data(capacity: kHeaderReadCapacity)
-    readHeaders()
+    requestMessage = CFHTTPMessageCreateEmpty(kCFAllocatorDefault, true).takeRetainedValue()
+    readHeaders() { extraData in
+      if let extraData {
+        self.logger.info("received")
+      } else {
+        self.logger.info("aborted")
+      }
+    }
     
     let method = "GET"
     let url = URL(string: "localhost")!
@@ -73,13 +87,23 @@ public class GCDWebServerConnection {
     }
   }
   
-  private func readHeaders() {
+  private func readHeaders(with block: @escaping ReadHeadersCompletionBlock) {
     readData(dataType: readDataTypes.headers.rawValue, with: Int.max) { success in
       if success {
         let range = self.headersData?.range(of: self.doubleCRLFData, options: [], in: 0..<self.headersData!.count)
         if let range, !range.isEmpty {
+          let length = range.lowerBound + range.count
+          let headersByteData = [UInt8](self.headersData!)
+          
+          if !CFHTTPMessageAppendBytes(self.requestMessage!, headersByteData, length) {
+            block(nil)
+          }
+          if !CFHTTPMessageIsHeaderComplete(self.requestMessage!) {
+            block(nil)
+          }
+          block(self.headersData?.subdata(in: length..<self.headersData!.count))
         } else {
-          self.readHeaders()
+          self.readHeaders(with: block)
         }
       }
     }

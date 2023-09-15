@@ -1,8 +1,26 @@
 @testable import GCDWebServer_Swift
 
+import OSLog
+
 import XCTest
 
 final class Tests: XCTestCase {
+  
+  func isIncludedInLogMessages(logKeyWord: String) -> Bool {
+    do {
+      let store = try OSLogStore.init(scope: .currentProcessIdentifier)
+      let position = store.position(date: Date().addingTimeInterval(-10))
+      let entries = try store.getEntries(with: [], at: position, matching: nil)
+      for entry in entries {
+        if (entry.composedMessage.contains(logKeyWord)) {
+          return true
+        }
+      }
+      return false
+    } catch {
+      return false
+    }
+  }
   
   func testAddHandler() throws {
     let server = GCDWebServer()
@@ -53,5 +71,10 @@ final class Tests: XCTestCase {
       let errorMessage = String(cString: strerror(errorNumber))
       XCTFail("Connect failed with error: \(errorNumber) - \(errorMessage)")
     }
+    
+    server.stop()
+    
+    let expectedLogKeyWord = "received"
+    XCTAssert(isIncludedInLogMessages(logKeyWord: expectedLogKeyWord))
   }
 }
