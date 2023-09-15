@@ -11,6 +11,7 @@
 		87BD48692A950DDA00FB48E0 /* GCDWebServerConnection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87BD48682A950DDA00FB48E0 /* GCDWebServerConnection.swift */; };
 		87BD486B2A95102000FB48E0 /* GCDWebServer+Testing.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87BD486A2A95102000FB48E0 /* GCDWebServer+Testing.swift */; };
 		87BD486D2A95105200FB48E0 /* GCDWebServerConnectionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87BD486C2A95105200FB48E0 /* GCDWebServerConnectionTests.swift */; };
+		87E120EF2AB458F600C38D54 /* SwiftFormat in Frameworks */ = {isa = PBXBuildFile; productRef = 87E120EE2AB458F600C38D54 /* SwiftFormat */; };
 		87F6118E2A93C68F00404C89 /* GCDWebServer_Swift.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87F6118D2A93C68F00404C89 /* GCDWebServer_Swift.swift */; };
 		87F6119B2A93C6B600404C89 /* GCDWebServerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87F6119A2A93C6B600404C89 /* GCDWebServerTests.swift */; };
 		87F6119C2A93C6B600404C89 /* libGCDWebServer-Swift.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 87F6118A2A93C68F00404C89 /* libGCDWebServer-Swift.a */; };
@@ -44,6 +45,7 @@
 		87BD48682A950DDA00FB48E0 /* GCDWebServerConnection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GCDWebServerConnection.swift; sourceTree = "<group>"; };
 		87BD486A2A95102000FB48E0 /* GCDWebServer+Testing.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "GCDWebServer+Testing.swift"; sourceTree = "<group>"; };
 		87BD486C2A95105200FB48E0 /* GCDWebServerConnectionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GCDWebServerConnectionTests.swift; sourceTree = "<group>"; };
+		87E120F12AB4597C00C38D54 /* .swiftformat */ = {isa = PBXFileReference; lastKnownFileType = text; path = .swiftformat; sourceTree = "<group>"; };
 		87F6118A2A93C68F00404C89 /* libGCDWebServer-Swift.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libGCDWebServer-Swift.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		87F6118D2A93C68F00404C89 /* GCDWebServer_Swift.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GCDWebServer_Swift.swift; sourceTree = "<group>"; };
 		87F611982A93C6B600404C89 /* Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = Tests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -55,6 +57,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				87E120EF2AB458F600C38D54 /* SwiftFormat in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -72,6 +75,7 @@
 		87F611812A93C68F00404C89 = {
 			isa = PBXGroup;
 			children = (
+				87E120F12AB4597C00C38D54 /* .swiftformat */,
 				876475D02A947038002B6361 /* .gitignore */,
 				87F6118C2A93C68F00404C89 /* GCDWebServer-Swift */,
 				87F611992A93C6B600404C89 /* Tests */,
@@ -126,6 +130,9 @@
 			dependencies = (
 			);
 			name = "GCDWebServer-Swift";
+			packageProductDependencies = (
+				87E120EE2AB458F600C38D54 /* SwiftFormat */,
+			);
 			productName = "GCDWebServer-Swift";
 			productReference = 87F6118A2A93C68F00404C89 /* libGCDWebServer-Swift.a */;
 			productType = "com.apple.product-type.library.static";
@@ -175,6 +182,9 @@
 				Base,
 			);
 			mainGroup = 87F611812A93C68F00404C89;
+			packageReferences = (
+				87E120ED2AB458F600C38D54 /* XCRemoteSwiftPackageReference "SwiftFormat" */,
+			);
 			productRefGroup = 87F6118B2A93C68F00404C89 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -426,6 +436,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		87E120ED2AB458F600C38D54 /* XCRemoteSwiftPackageReference "SwiftFormat" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/nicklockwood/SwiftFormat";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 0.52.3;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		87E120EE2AB458F600C38D54 /* SwiftFormat */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 87E120ED2AB458F600C38D54 /* XCRemoteSwiftPackageReference "SwiftFormat" */;
+			productName = SwiftFormat;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 87F611822A93C68F00404C89 /* Project object */;
 }
