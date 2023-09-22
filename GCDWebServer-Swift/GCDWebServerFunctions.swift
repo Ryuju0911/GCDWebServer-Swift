@@ -27,14 +27,18 @@
 
 import Foundation
 
-public func GCDWebserverNormalizeHeaderValue(_ value: String) -> String {
-  // Assume part before ";" separator is case-insensitive
-  let range = value.range(of: ";")
-  if let range {
-    let pre = value[..<range.lowerBound].lowercased()
-    let suf = value[range.lowerBound...]
-    return pre + suf
+public func GCDWebserverNormalizeHeaderValue(_ value: String?) -> String? {
+  if let value {
+    // Assume part before ";" separator is case-insensitive
+    let range = value.range(of: ";")
+    if let range {
+      let pre = value[..<range.lowerBound].lowercased()
+      let suf = value[range.lowerBound...]
+      return pre + suf
+    }
+
+    return value.lowercased()
   }
 
-  return value.lowercased()
+  return nil
 }

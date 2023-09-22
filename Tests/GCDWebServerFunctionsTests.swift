@@ -7,6 +7,7 @@ final class GCDWebServerFunctionTest: XCTestCase {
     XCTAssertEqual(
       GCDWebserverNormalizeHeaderValue("TEXT/PLAIN; Other-header"), "text/plain; Other-header")
     XCTAssertEqual(GCDWebserverNormalizeHeaderValue("PLAIN"), "plain")
+    XCTAssertNil(GCDWebserverNormalizeHeaderValue(nil))
   }
 
 }
