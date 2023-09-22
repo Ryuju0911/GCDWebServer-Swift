@@ -62,27 +62,36 @@ public class GCDWebServerConnection {
   }
 
   private func readRequestHeaders() {
-    headersData = Data(capacity: kHeaderReadCapacity)
-    requestMessage = CFHTTPMessageCreateEmpty(kCFAllocatorDefault, true).takeRetainedValue()
+    self.headersData = Data(capacity: kHeaderReadCapacity)
+    self.requestMessage = CFHTTPMessageCreateEmpty(kCFAllocatorDefault, true).takeRetainedValue()
     readHeaders { extraData in
       if let extraData {
-        self.logger.info("received")
-      } else {
-        self.logger.info("aborted")
-      }
-    }
+        let requestMethod: CFString? = CFHTTPMessageCopyRequestMethod(self.requestMessage!)?
+          .takeRetainedValue()
+        let requestHeaders: CFDictionary? = CFHTTPMessageCopyAllHeaderFields(self.requestMessage!)?
+          .takeRetainedValue()
+        let requestURL: CFURL? = CFHTTPMessageCopyRequestURL(self.requestMessage!)?
+          .takeRetainedValue()
+        // requestPath and requestQuery should be escaped later.
+        let requestPath: String = requestURL != nil ? CFURLCopyPath(requestURL)! as String : "/"
+        let requestQuery: [String: String] = [:]
 
-    let method = "GET"
-    let url = URL(string: "localhost")!
-    let headers: [String: String] = [:]
-    let path = "/home"
-    let query: [String: String] = [:]
+        if let requestMethod, let requestHeaders, let requestURL {
+          let method = requestMethod as String
+          let headers = requestHeaders as! [String: String]
+          let url = requestURL as URL
+          let path = requestPath
+          let query = requestQuery
 
-    for handler in server.handlers {
-      let request = handler.matchBlock(method, url, headers, path, query)
-      if let request {
-        self.request = request
-        break
+          for handler in self.server.handlers {
+            let request = handler.matchBlock(method, url, headers, path, query)
+            if let request {
+              self.request = request
+              self.logger.info("received")
+              break
+            }
+          }
+        }
       }
     }
   }
@@ -142,6 +151,6 @@ public class GCDWebServerConnection {
 extension GCDWebServerConnection {
 
   public func isRequestNull() -> Bool {
-    return request == nil
+    return self.request == nil
   }
 }
