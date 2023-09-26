@@ -13,6 +13,7 @@
 		87BD48692A950DDA00FB48E0 /* GCDWebServerConnection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87BD48682A950DDA00FB48E0 /* GCDWebServerConnection.swift */; };
 		87BD486B2A95102000FB48E0 /* GCDWebServer+Testing.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87BD486A2A95102000FB48E0 /* GCDWebServer+Testing.swift */; };
 		87BD486D2A95105200FB48E0 /* GCDWebServerConnectionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87BD486C2A95105200FB48E0 /* GCDWebServerConnectionTests.swift */; };
+		87D689182AC3356E00BFA7E4 /* GCDWebServerResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87D689172AC3356E00BFA7E4 /* GCDWebServerResponse.swift */; };
 		87E120EF2AB458F600C38D54 /* SwiftFormat in Frameworks */ = {isa = PBXBuildFile; productRef = 87E120EE2AB458F600C38D54 /* SwiftFormat */; };
 		87F6118E2A93C68F00404C89 /* GCDWebServer_Swift.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87F6118D2A93C68F00404C89 /* GCDWebServer_Swift.swift */; };
 		87F6119B2A93C6B600404C89 /* GCDWebServerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87F6119A2A93C6B600404C89 /* GCDWebServerTests.swift */; };
@@ -49,6 +50,7 @@
 		87BD48682A950DDA00FB48E0 /* GCDWebServerConnection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GCDWebServerConnection.swift; sourceTree = "<group>"; };
 		87BD486A2A95102000FB48E0 /* GCDWebServer+Testing.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "GCDWebServer+Testing.swift"; sourceTree = "<group>"; };
 		87BD486C2A95105200FB48E0 /* GCDWebServerConnectionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GCDWebServerConnectionTests.swift; sourceTree = "<group>"; };
+		87D689172AC3356E00BFA7E4 /* GCDWebServerResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GCDWebServerResponse.swift; sourceTree = "<group>"; };
 		87E120F12AB4597C00C38D54 /* .swiftformat */ = {isa = PBXFileReference; lastKnownFileType = text; path = .swiftformat; sourceTree = "<group>"; };
 		87F6118A2A93C68F00404C89 /* libGCDWebServer-Swift.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libGCDWebServer-Swift.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		87F6118D2A93C68F00404C89 /* GCDWebServer_Swift.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GCDWebServer_Swift.swift; sourceTree = "<group>"; };
@@ -106,6 +108,7 @@
 				87BD48682A950DDA00FB48E0 /* GCDWebServerConnection.swift */,
 				87BD486A2A95102000FB48E0 /* GCDWebServer+Testing.swift */,
 				877374CC2ABD8D2800977423 /* GCDWebServerFunctions.swift */,
+				87D689172AC3356E00BFA7E4 /* GCDWebServerResponse.swift */,
 			);
 			path = "GCDWebServer-Swift";
 			sourceTree = "<group>";
@@ -221,6 +224,7 @@
 				87BD48672A95091B00FB48E0 /* GCDWebServerRequest.swift in Sources */,
 				877374CD2ABD8D2800977423 /* GCDWebServerFunctions.swift in Sources */,
 				87F6118E2A93C68F00404C89 /* GCDWebServer_Swift.swift in Sources */,
+				87D689182AC3356E00BFA7E4 /* GCDWebServerResponse.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -25,7 +25,11 @@ final class GCDWebServerTests: XCTestCase {
     let server = GCDWebServer()
     XCTAssertNotNil(server)
 
-    server.addHandler(for: "GET", regex: "/test")
+    let processBlock: GCDWebServerProcessBlock = { _ in
+      return nil
+    }
+
+    server.addHandler(for: "GET", regex: "/test", processBlock: processBlock)
     XCTAssertEqual(server.handlersCount(), 1)
 
     XCTAssertNotNil(
@@ -44,7 +48,10 @@ final class GCDWebServerTests: XCTestCase {
 
   func testStart() {
     let server = GCDWebServer()
-    server.addHandler(for: "GET", regex: "/test")
+    server.addHandler(for: "GET", regex: "/test") { _ in
+      // This response will be replaced by GCDWebServerDataResponse.
+      return nil
+    }
     XCTAssert(server.start())
 
     let clientSocket = socket(PF_INET, SOCK_STREAM, IPPROTO_TCP)
