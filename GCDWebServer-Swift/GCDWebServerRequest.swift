@@ -51,6 +51,8 @@ public class GCDWebServerRequest: GCDWebServerBodyWriter {
 
   private var query: String
 
+  public var contentLength: Int
+
   private var contentType: String?
 
   private var writer: GCDWebServerBodyWriter?
@@ -64,6 +66,12 @@ public class GCDWebServerRequest: GCDWebServerBodyWriter {
     self.path = path
     self.query = query
 
+    if let lengthHeader = self.headers["Content-Length"] {
+      // TODO: Add usesChunkedTransferEncoding property and use it here.
+      self.contentLength = Int(lengthHeader)!
+    } else {
+      self.contentLength = .max
+    }
     self.contentType = GCDWebserverNormalizeHeaderValue(self.headers["Content-Type"])
   }
 

@@ -37,6 +37,7 @@ let kHeaderReadCapacity = 1024
 
 /// Convenience constants for "client error" HTTP status codes.
 enum GCDWebServerClientErrorHTTPStatusCode: Int {
+  case badRequest = 400
   case unauthorized = 401
   case preconditionFailed = 412
 }
@@ -155,6 +156,12 @@ public class GCDWebServerConnection {
           if !self.request!.hasBody() {
             // TODO: Add test cases to verify the followiug line.
             self.startProcessingRequest()
+            return
+          }
+
+          self.request!.prepareForWriting()
+          if extraData.count > self.request!.contentLength {
+            self.abortRequest(with: GCDWebServerClientErrorHTTPStatusCode.badRequest.rawValue)
             return
           }
           self.logger.info("received")
