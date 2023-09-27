@@ -43,6 +43,7 @@ enum GCDWebServerClientErrorHTTPStatusCode: Int {
 
 /// Convenience constants for "server error" HTTP status codes.
 enum GCDWebServerServerErrorHTTPStatusCode: Int {
+  case internalServerError = 500
   case notImplemented = 501
 }
 
@@ -152,6 +153,8 @@ public class GCDWebServerConnection {
             return
           }
           if !self.request!.hasBody() {
+            // TODO: Add test cases to verify the followiug line.
+            self.startProcessingRequest()
             return
           }
           self.logger.info("received")
@@ -214,8 +217,11 @@ public class GCDWebServerConnection {
   }
 
   private func startProcessingRequest() {
-    // let preflightResponse = preflightRequest()
-    // Following code will be added later.
+    let preflightResponse = preflightRequest()
+    // TODO: Add else block.
+    if let preflightResponse {
+      finishProcessingRequest(response: preflightResponse)
+    }
   }
 
   private func preflightRequest() -> GCDWebServerResponse? {
@@ -243,9 +249,11 @@ public class GCDWebServerConnection {
     // Currently, the following line always fails.
     if response.hadBody() {
       // TODO: Replace true with self.virtualHEAD
+      // TODO: Implement prepareForReading of GCDWebServerResponse and call it here.
       hasBody = true
     }
 
+    // TODO: Implement performOpen of GCDWebServerResponse and call it here.
     if !hasBody {
       self.response = response
     }
@@ -260,6 +268,8 @@ public class GCDWebServerConnection {
           } else if hasBody {
             // TODO: Implement preformClose of GCDWebServerResponse and call it here.
           }
+        } else {
+          abortRequest(with: GCDWebServerServerErrorHTTPStatusCode.internalServerError.rawValue)
         }
       }
     }
