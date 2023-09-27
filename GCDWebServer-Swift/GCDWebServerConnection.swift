@@ -28,12 +28,20 @@
 import Foundation
 import os
 
-let kHeaderReadCapacity = 1024
-
-enum GCDWebServerHTTPStatusCode: Int {
-  case unauthorized = 401
+/// Convenience constants for "redirection" HTTP status codes.
+enum GCDWebServerRedirectionHTTPStatusCode: Int {
+  case notModified = 304
 }
 
+let kHeaderReadCapacity = 1024
+
+/// Convenience constants for "client error" HTTP status codes.
+enum GCDWebServerClientErrorHTTPStatusCode: Int {
+  case unauthorized = 401
+  case preconditionFailed = 412
+}
+
+/// Convenience constants for "server error" HTTP status codes.
 enum GCDWebServerServerErrorHTTPStatusCode: Int {
   case notImplemented = 501
 }
@@ -64,7 +72,9 @@ public class GCDWebServerConnection {
 
   private var requestMessage: CFHTTPMessage?
 
-  private var responceMessage: CFHTTPMessage?
+  private var response: GCDWebServerResponse?
+
+  private var responseMessage: CFHTTPMessage?
 
   private var statusCode: Int?
 
@@ -173,6 +183,29 @@ public class GCDWebServerConnection {
     }
   }
 
+  // MARK: Write
+
+  private func writeData(data: Data, with completionBlock: @escaping WriteDataCompletionBlock) {
+    let dispatchData = data.withUnsafeBytes { DispatchData(bytes: $0) }
+    let writeQueue = DispatchQueue(label: "GCDWebServerConnection.writeQueue")
+    DispatchIO.write(toFileDescriptor: socket, data: dispatchData, runningHandlerOn: writeQueue) {
+      data, error in
+      if error == 0 {
+        completionBlock(true)
+      } else {
+        completionBlock(false)
+      }
+    }
+  }
+
+  private func writeHeadersWithCompletionBlock(block: WriteHeadersCompletionBlock) {
+    if let responseMessage = self.responseMessage,
+      let data = CFHTTPMessageCopySerializedMessage(responseMessage)
+    {
+      writeData(data: data.takeRetainedValue() as Data) { success in }
+    }
+  }
+
   // MARK: Request
 
   private func abortRequest(with statusCode: Int) {
@@ -192,7 +225,7 @@ public class GCDWebServerConnection {
     // authentication check should be added later
     if !authenticated {
       response = GCDWebServerResponse.response(
-        with: GCDWebServerHTTPStatusCode.unauthorized.rawValue)
+        with: GCDWebServerClientErrorHTTPStatusCode.unauthorized.rawValue)
     }
     return response
   }
@@ -203,37 +236,61 @@ public class GCDWebServerConnection {
     self.handler?.asyncProcessBlock(request, completion)
   }
 
+  private func finishProcessingRequest(response: GCDWebServerResponse) {
+    let response = overrideResponse(response, for: self.request!)
+    var hasBody = false
+
+    // Currently, the following line always fails.
+    if response.hadBody() {
+      // TODO: Replace true with self.virtualHEAD
+      hasBody = true
+    }
+
+    if !hasBody {
+      self.response = response
+    }
+
+    if self.response != nil {
+      // TODO: Add other response properties and logic with them.
+      initializeResponceHeaders(with: self.response!.statusCode)
+      writeHeadersWithCompletionBlock { success in
+        if success {
+          if hasBody {
+            // TODO: Implement performClose of GCDWebServerResponse and call it here.
+          } else if hasBody {
+            // TODO: Implement preformClose of GCDWebServerResponse and call it here.
+          }
+        }
+      }
+    }
+  }
+
   // MARK: Responce
 
   private func initializeResponceHeaders(with statusCode: Int) {
     self.statusCode = statusCode
     let statusDescription: CFString? = nil
-    self.responceMessage = CFHTTPMessageCreateResponse(
+    self.responseMessage = CFHTTPMessageCreateResponse(
       kCFAllocatorDefault, statusCode, statusDescription, kCFHTTPVersion1_1
     ).takeRetainedValue()
   }
 
   // MARK: Write
 
-  private func writeData(data: Data, with completionBlock: @escaping WriteDataCompletionBlock) {
-    let dispatchData = data.withUnsafeBytes { DispatchData(bytes: $0) }
-    let writeQueue = DispatchQueue(label: "GCDWebServerConnection.writeQueue")
-    DispatchIO.write(toFileDescriptor: socket, data: dispatchData, runningHandlerOn: writeQueue) {
-      data, error in
-      if error == 0 {
-        completionBlock(true)
-      } else {
-        completionBlock(false)
-      }
+  private func overrideResponse(_ response: GCDWebServerResponse, for request: GCDWebServerRequest)
+    -> GCDWebServerResponse
+  {
+    let overridenRespose = response
+    // TODO: Add response properties and logic with them.
+    // TODO: Add test cases which cause overriding.
+    if response.statusCode >= 200 && response.statusCode < 300 {
+      let statusCode =
+        request.method == "HEAD" || request.method == "GET"
+        ? GCDWebServerRedirectionHTTPStatusCode.notModified.rawValue
+        : GCDWebServerClientErrorHTTPStatusCode.preconditionFailed.rawValue
+      return GCDWebServerResponse(statusCode: statusCode)
     }
-  }
-
-  private func writeHeadersWithCompletionBlock(block: WriteHeadersCompletionBlock) {
-    if let responceMessage = self.responceMessage,
-      let data = CFHTTPMessageCopySerializedMessage(responceMessage)
-    {
-      writeData(data: data.takeRetainedValue() as Data) { suucss in }
-    }
+    return overridenRespose
   }
 
   // MARK: Tmp
