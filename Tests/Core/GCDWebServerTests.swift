@@ -26,7 +26,7 @@ final class GCDWebServerTests: XCTestCase {
     XCTAssertNotNil(server)
 
     let processBlock: GCDWebServerProcessBlock = { _ in
-      return nil
+      return GCDWebServerDataResponse(html: "<html><body><p>Hello World</p></body></html>")
     }
 
     server.addHandler(for: "GET", regex: "/test", processBlock: processBlock)
@@ -49,8 +49,7 @@ final class GCDWebServerTests: XCTestCase {
   func testStart() {
     let server = GCDWebServer()
     server.addHandler(for: "GET", regex: "/test") { _ in
-      // This response will be replaced by GCDWebServerDataResponse.
-      return nil
+      return GCDWebServerDataResponse(html: "<html><body><p>Hello World</p></body></html>")
     }
     XCTAssert(server.start())
 

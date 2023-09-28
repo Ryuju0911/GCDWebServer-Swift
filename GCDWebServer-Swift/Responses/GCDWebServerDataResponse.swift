@@ -39,7 +39,7 @@ public class GCDWebServerDataResponse: GCDWebServerResponse {
     self.contentLength = data.count
   }
 
-  public convenience init?(with html: String) {
+  public convenience init?(html: String) {
     if let data = html.data(using: .utf8) {
       self.init(with: data, contentType: "text/html; charset=utf-8")
     } else {
@@ -48,7 +48,7 @@ public class GCDWebServerDataResponse: GCDWebServerResponse {
   }
 
   // MARK: Class methods
-  public class func response(with html: String) -> GCDWebServerResponse? {
-    return GCDWebServerDataResponse(with: html)
+  public class func response(html: String) -> GCDWebServerResponse? {
+    return GCDWebServerDataResponse(html: html)
   }
 }
