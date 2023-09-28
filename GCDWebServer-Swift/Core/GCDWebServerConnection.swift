@@ -28,26 +28,8 @@
 import Foundation
 import os
 
-/// Convenience constants for "redirection" HTTP status codes.
-enum GCDWebServerRedirectionHTTPStatusCode: Int {
-  case notModified = 304
-}
-
 let kHeaderReadCapacity = 1024
 let kBodyReadCapacity = 256 * 1024
-
-/// Convenience constants for "client error" HTTP status codes.
-enum GCDWebServerClientErrorHTTPStatusCode: Int {
-  case badRequest = 400
-  case unauthorized = 401
-  case preconditionFailed = 412
-}
-
-/// Convenience constants for "server error" HTTP status codes.
-enum GCDWebServerServerErrorHTTPStatusCode: Int {
-  case internalServerError = 500
-  case notImplemented = 501
-}
 
 typealias ReadCompletionBlock = (_ success: Bool) -> Void
 

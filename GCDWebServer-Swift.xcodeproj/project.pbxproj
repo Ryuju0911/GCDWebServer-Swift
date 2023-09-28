@@ -15,6 +15,9 @@
 		87BD486D2A95105200FB48E0 /* GCDWebServerConnectionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87BD486C2A95105200FB48E0 /* GCDWebServerConnectionTests.swift */; };
 		87D689182AC3356E00BFA7E4 /* GCDWebServerResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87D689172AC3356E00BFA7E4 /* GCDWebServerResponse.swift */; };
 		87E120EF2AB458F600C38D54 /* SwiftFormat in Frameworks */ = {isa = PBXBuildFile; productRef = 87E120EE2AB458F600C38D54 /* SwiftFormat */; };
+		87EF71442AC5600800011859 /* GCDWebServerHTTPStatusCodes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87EF71432AC5600800011859 /* GCDWebServerHTTPStatusCodes.swift */; };
+		87EF71482AC5622D00011859 /* GCDWebServerDataResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87EF71472AC5622D00011859 /* GCDWebServerDataResponse.swift */; };
+		87EF714C2AC5643000011859 /* GCDWebServerDataResponseTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87EF714B2AC5643000011859 /* GCDWebServerDataResponseTests.swift */; };
 		87F6118E2A93C68F00404C89 /* GCDWebServer_Swift.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87F6118D2A93C68F00404C89 /* GCDWebServer_Swift.swift */; };
 		87F6119B2A93C6B600404C89 /* GCDWebServerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87F6119A2A93C6B600404C89 /* GCDWebServerTests.swift */; };
 		87F6119C2A93C6B600404C89 /* libGCDWebServer-Swift.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 87F6118A2A93C68F00404C89 /* libGCDWebServer-Swift.a */; };
@@ -52,6 +55,9 @@
 		87BD486C2A95105200FB48E0 /* GCDWebServerConnectionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GCDWebServerConnectionTests.swift; sourceTree = "<group>"; };
 		87D689172AC3356E00BFA7E4 /* GCDWebServerResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GCDWebServerResponse.swift; sourceTree = "<group>"; };
 		87E120F12AB4597C00C38D54 /* .swiftformat */ = {isa = PBXFileReference; lastKnownFileType = text; path = .swiftformat; sourceTree = "<group>"; };
+		87EF71432AC5600800011859 /* GCDWebServerHTTPStatusCodes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GCDWebServerHTTPStatusCodes.swift; sourceTree = "<group>"; };
+		87EF71472AC5622D00011859 /* GCDWebServerDataResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GCDWebServerDataResponse.swift; sourceTree = "<group>"; };
+		87EF714B2AC5643000011859 /* GCDWebServerDataResponseTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GCDWebServerDataResponseTests.swift; sourceTree = "<group>"; };
 		87F6118A2A93C68F00404C89 /* libGCDWebServer-Swift.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libGCDWebServer-Swift.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		87F6118D2A93C68F00404C89 /* GCDWebServer_Swift.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GCDWebServer_Swift.swift; sourceTree = "<group>"; };
 		87F611982A93C6B600404C89 /* Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = Tests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -78,6 +84,46 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		87EF71452AC561B200011859 /* Core */ = {
+			isa = PBXGroup;
+			children = (
+				87EF71432AC5600800011859 /* GCDWebServerHTTPStatusCodes.swift */,
+				87F6118D2A93C68F00404C89 /* GCDWebServer_Swift.swift */,
+				87BD48662A95091B00FB48E0 /* GCDWebServerRequest.swift */,
+				87BD48682A950DDA00FB48E0 /* GCDWebServerConnection.swift */,
+				87BD486A2A95102000FB48E0 /* GCDWebServer+Testing.swift */,
+				877374CC2ABD8D2800977423 /* GCDWebServerFunctions.swift */,
+				87D689172AC3356E00BFA7E4 /* GCDWebServerResponse.swift */,
+			);
+			path = Core;
+			sourceTree = "<group>";
+		};
+		87EF71462AC5620D00011859 /* Responses */ = {
+			isa = PBXGroup;
+			children = (
+				87EF71472AC5622D00011859 /* GCDWebServerDataResponse.swift */,
+			);
+			path = Responses;
+			sourceTree = "<group>";
+		};
+		87EF71492AC563F900011859 /* Core */ = {
+			isa = PBXGroup;
+			children = (
+				87F6119A2A93C6B600404C89 /* GCDWebServerTests.swift */,
+				87BD486C2A95105200FB48E0 /* GCDWebServerConnectionTests.swift */,
+				877374CA2ABD8CFC00977423 /* GCDWebServerFunctionsTests.swift */,
+			);
+			path = Core;
+			sourceTree = "<group>";
+		};
+		87EF714A2AC5641900011859 /* Responses */ = {
+			isa = PBXGroup;
+			children = (
+				87EF714B2AC5643000011859 /* GCDWebServerDataResponseTests.swift */,
+			);
+			path = Responses;
+			sourceTree = "<group>";
+		};
 		87F611812A93C68F00404C89 = {
 			isa = PBXGroup;
 			children = (
@@ -103,12 +149,8 @@
 		87F6118C2A93C68F00404C89 /* GCDWebServer-Swift */ = {
 			isa = PBXGroup;
 			children = (
-				87F6118D2A93C68F00404C89 /* GCDWebServer_Swift.swift */,
-				87BD48662A95091B00FB48E0 /* GCDWebServerRequest.swift */,
-				87BD48682A950DDA00FB48E0 /* GCDWebServerConnection.swift */,
-				87BD486A2A95102000FB48E0 /* GCDWebServer+Testing.swift */,
-				877374CC2ABD8D2800977423 /* GCDWebServerFunctions.swift */,
-				87D689172AC3356E00BFA7E4 /* GCDWebServerResponse.swift */,
+				87EF71462AC5620D00011859 /* Responses */,
+				87EF71452AC561B200011859 /* Core */,
 			);
 			path = "GCDWebServer-Swift";
 			sourceTree = "<group>";
@@ -116,9 +158,8 @@
 		87F611992A93C6B600404C89 /* Tests */ = {
 			isa = PBXGroup;
 			children = (
-				87F6119A2A93C6B600404C89 /* GCDWebServerTests.swift */,
-				87BD486C2A95105200FB48E0 /* GCDWebServerConnectionTests.swift */,
-				877374CA2ABD8CFC00977423 /* GCDWebServerFunctionsTests.swift */,
+				87EF714A2AC5641900011859 /* Responses */,
+				87EF71492AC563F900011859 /* Core */,
 			);
 			path = Tests;
 			sourceTree = "<group>";
@@ -224,7 +265,9 @@
 				87BD48672A95091B00FB48E0 /* GCDWebServerRequest.swift in Sources */,
 				877374CD2ABD8D2800977423 /* GCDWebServerFunctions.swift in Sources */,
 				87F6118E2A93C68F00404C89 /* GCDWebServer_Swift.swift in Sources */,
+				87EF71482AC5622D00011859 /* GCDWebServerDataResponse.swift in Sources */,
 				87D689182AC3356E00BFA7E4 /* GCDWebServerResponse.swift in Sources */,
+				87EF71442AC5600800011859 /* GCDWebServerHTTPStatusCodes.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -233,6 +276,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				87BD486D2A95105200FB48E0 /* GCDWebServerConnectionTests.swift in Sources */,
+				87EF714C2AC5643000011859 /* GCDWebServerDataResponseTests.swift in Sources */,
 				87F6119B2A93C6B600404C89 /* GCDWebServerTests.swift in Sources */,
 				877374CB2ABD8CFC00977423 /* GCDWebServerFunctionsTests.swift in Sources */,
 			);
